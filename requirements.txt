@@ -14,12 +14,12 @@ pydantic==1.9.1
 nltk==3.6.5
 googletrans==3.1.0a0
 gtts==2.2.3
-Base PyTorch installation with CPU-only fallback if CUDA issues persist
+# Base PyTorch installation with CPU-only fallback if CUDA issues persist
 # --extra-index-url https://download.pytorch.org/whl/cpu
 # torch>=1.11.0
 # torchvision>=0.12.0
 
-# # Application dependencies from your original requirements
+# Application dependencies from your original requirements
 # beautifulsoup4==4.10.0
 # requests==2.26.0
 # streamlit==1.11.0
