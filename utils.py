@@ -38,7 +38,7 @@ def analyze_sentiment(text):
 
 def generate_summary(text):
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-    summary = summarizer(text, max_length=100, min_length=30, do_sample=False)
+    summary = summarizer(text, max_length=5, min_length=30, do_sample=False)
     return summary[0]['summary_text']
 
 def identify_topics(texts, num_topics=5):
