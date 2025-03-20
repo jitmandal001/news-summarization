@@ -6,9 +6,16 @@ app = FastAPI()
 
 class CompanyRequest(BaseModel):
     name: str
-# hosted on hugging face
-@app.post("/analyze_company")
-async def analyze_company(request: CompanyRequest):
+
+# Add the missing function that app.py is trying to import
+def fetch_company_data(company_name):
+    # Create a request object
+    request = CompanyRequest(name=company_name)
+    # Call the analyze_company function directly
+    return analyze_company_sync(request)
+
+# Create a synchronous version of analyze_company that can be called directly
+def analyze_company_sync(request: CompanyRequest):
     try:
         articles = extract_news(request.name)
         results = []
@@ -38,6 +45,14 @@ async def analyze_company(request: CompanyRequest):
             'audio_summary': audio_summary.getvalue()
         }
     except Exception as e:
+        # When called directly, return the error instead of raising HTTPException
+        return {"error": str(e)}
+
+@app.post("/analyze_company")
+async def analyze_company(request: CompanyRequest):
+    try:
+        return analyze_company_sync(request)
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 def perform_comparative_analysis(results):
@@ -45,11 +60,9 @@ def perform_comparative_analysis(results):
     positive = sentiments.count('POSITIVE')
     negative = sentiments.count('NEGATIVE')
     neutral = sentiments.count('NEUTRAL')
-    
     return f"Comparative Analysis: {positive} positive, {negative} negative, and {neutral} neutral articles."
 
 def generate_overall_summary(results):
     overall_sentiment = max(set([result['sentiment'] for result in results]), key=[result['sentiment'] for result in results].count)
     top_topics = set([topic for result in results for topic in result['topics']])
-    
     return f"Overall sentiment is {overall_sentiment}. Top topics include {', '.join(list(top_topics)[:5])}."
