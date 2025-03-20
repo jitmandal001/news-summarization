@@ -6,7 +6,7 @@ app = FastAPI()
 
 class CompanyRequest(BaseModel):
     name: str
-
+# hosted on hugging face
 @app.post("/analyze_company")
 async def analyze_company(request: CompanyRequest):
     try:
