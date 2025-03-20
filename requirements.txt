@@ -1,37 +1,37 @@
-# beautifulsoup4==4.10.0
-# requests==2.26.0
-# streamlit==1.11.0
-# transformers==4.21.0
-# torch==1.10.0
-# fastapi==0.78.0
-# uvicorn==0.18.2
-# gensim==4.2.0
-# numpy==1.21.5
-# pandas==1.3.5
-# matplotlib==3.5.2
-# seaborn==0.11.2
-# pydantic==1.9.1
-# nltk==3.6.5
-# googletrans==3.1.0a0
-# gtts==2.2.3
-# Base PyTorch installation with CPU-only fallback if CUDA issues persist
---extra-index-url https://download.pytorch.org/whl/cpu
-torch>=1.11.0
-torchvision>=0.12.0
-
-# Application dependencies from your original requirements
 beautifulsoup4==4.10.0
 requests==2.26.0
 streamlit==1.11.0
 transformers==4.21.0
+torch==1.10.0
 fastapi==0.78.0
 uvicorn==0.18.2
 gensim==4.2.0
-numpy==2.2.4
+numpy==1.21.5
 pandas==1.3.5
-matplotlib==3.10.1
+matplotlib==3.5.2
 seaborn==0.11.2
 pydantic==1.9.1
 nltk==3.6.5
 googletrans==3.1.0a0
 gtts==2.2.3
+Base PyTorch installation with CPU-only fallback if CUDA issues persist
+# --extra-index-url https://download.pytorch.org/whl/cpu
+# torch>=1.11.0
+# torchvision>=0.12.0
+
+# # Application dependencies from your original requirements
+# beautifulsoup4==4.10.0
+# requests==2.26.0
+# streamlit==1.11.0
+# transformers==4.21.0
+# fastapi==0.78.0
+# uvicorn==0.18.2
+# gensim==4.2.0
+# numpy==2.2.4
+# pandas==1.3.5
+# matplotlib==3.10.1
+# seaborn==0.11.2
+# pydantic==1.9.1
+# nltk==3.6.5
+# googletrans==3.1.0a0
+# gtts==2.2.3
