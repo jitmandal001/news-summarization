@@ -1,6 +1,21 @@
 
 import streamlit as st
 import requests
+from fastapi import FastAPI
+from api import router
+
+app = FastAPI()
+
+# Include the router from api.py
+app.include_router(router, prefix="/api")
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Company Analysis API"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app:app", host="0.0.0.0", port=7860, reload=True)
 
 # Function to fetch data from the FastAPI backend
 def fetch_company_data(company_name):
