@@ -1,55 +1,95 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from utils import extract_news, analyze_sentiment, generate_summary, identify_topics, text_to_speech
+import uvicorn
+from typing import List, Dict, Any, Optional
+import utils
+import os
+import json
 
-router = APIRouter()
+app = FastAPI(title="News Sentiment API",
+             description="API for news extraction, sentiment analysis, and text-to-speech conversion")
 
 class CompanyRequest(BaseModel):
-    name: str
+    company_name: str
 
-@router.post("/analyze_company")
-async def analyze_company(request: CompanyRequest):
+class ArticleResponse(BaseModel):
+    Title: str
+    Summary: str
+    Sentiment: str
+    Topics: List[str]
+    Source: str
+    Published_Date: str
+    URL: str
+
+class ComparisonItem(BaseModel):
+    Comparison: str
+    Impact: str
+
+class TopicOverlap(BaseModel):
+    Common_Topics: List[str]
+    Unique_Topics: List[str]
+
+class SentimentDistribution(BaseModel):
+    Positive: int
+    Negative: int
+    Neutral: int
+
+class ComparativeSentiment(BaseModel):
+    Sentiment_Distribution: SentimentDistribution
+    Coverage_Differences: List[ComparisonItem]
+    Topic_Overlap: TopicOverlap
+    Final_Sentiment_Analysis: str
+
+class CompanyResponse(BaseModel):
+    Company: str
+    Articles: List[ArticleResponse]
+    Comparative_Sentiment_Score: ComparativeSentiment
+    Final_Sentiment_Analysis: str
+    Audio: str
+
+@app.post("/api/news", response_model=CompanyResponse)
+async def get_company_news(request: CompanyRequest):
+    """
+    Process news for a given company
+    
+    This endpoint extracts news articles about the specified company,
+    performs sentiment analysis, and generates a comparative analysis
+    along with a text-to-speech summary in Hindi.
+    """
     try:
-        articles = extract_news(request.name)
-        results = []
-        all_texts = []
-
-        for article in articles:
-            sentiment, score = analyze_sentiment(article['text'])
-            summary = generate_summary(article['text'])
-            all_texts.append(article['text'])
-            results.append({
-                'title': article['title'],
-                'summary': summary,
-                'sentiment': sentiment,
-                'sentiment_score': score,
-            })
-
-        topics = identify_topics(all_texts)
-        for result, topic in zip(results, topics):
-            result['topics'] = topic.split()
-
-        comparative_analysis = perform_comparative_analysis(results)
-        overall_summary = generate_overall_summary(results)
-        audio_summary = text_to_speech(overall_summary)
-
-        return {
-            'articles': results,
-            'comparative_analysis': comparative_analysis,
-            'audio_summary': audio_summary.getvalue()
+        # Process the company news
+        result = utils.process_company_news(request.company_name)
+        
+        # Format the result to match the response model
+        response = {
+            "Company": result["Company"],
+            "Articles": result["Articles"],
+            "Comparative_Sentiment_Score": {
+                "Sentiment_Distribution": result["Comparative Sentiment Score"]["Sentiment Distribution"],
+                "Coverage_Differences": result["Comparative Sentiment Score"]["Coverage Differences"],
+                "Topic_Overlap": {
+                    "Common_Topics": result["Comparative Sentiment Score"]["Topic Overlap"]["Common Topics"],
+                    "Unique_Topics": result["Comparative Sentiment Score"]["Topic Overlap"]["Unique Topics"]
+                },
+                "Final_Sentiment_Analysis": result["Comparative Sentiment Score"]["Final Sentiment Analysis"]
+            },
+            "Final_Sentiment_Analysis": result["Final Sentiment Analysis"],
+            "Audio": result["Audio"]
         }
-
+        
+        return response
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
 
-def perform_comparative_analysis(results):
-    sentiments = [result['sentiment'] for result in results]
-    positive = sentiments.count('POSITIVE')
-    negative = sentiments.count('NEGATIVE')
-    neutral = sentiments.count('NEUTRAL')
-    return f"Comparative Analysis: {positive} positive, {negative} negative, and {neutral} neutral articles."
+@app.get("/api/health")
+async def health_check():
+    """
+    Health check endpoint
+    
+    Returns status of the API
+    """
+    return {"status": "healthy", "version": "1.0.0"}
 
-def generate_overall_summary(results):
-    overall_sentiment = max(set([result['sentiment'] for result in results]), key=[result['sentiment'] for result in results].count)
-    top_topics = set([topic for result in results for topic in result['topics']])
-    return f"Overall sentiment is {overall_sentiment}. Top topics include {', '.join(list(top_topics)[:5])}."
+# If executed directly, run the API server
+if __name__ == "__main__":
+    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
