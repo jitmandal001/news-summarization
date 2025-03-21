@@ -104,27 +104,76 @@ def get_sample_data(company_name: str) -> Dict[str, Any]:
                 "Summary": f"{company_name} has reported exceptional performance in recent quarters, exceeding analyst expectations.",
                 "Sentiment": "Positive",
                 "Topics": ["Financial Performance", "Market Growth", "Investor Relations"],
-                "Source": "Business News",
-                "Published_Date": "2025-03-15",
-                "URL": f"https://example.com/{company_name.lower()}/1"
+               
             },
             {
                 "Title": f"{company_name} Faces Regulatory Scrutiny",
                 "Summary": f"Regulatory concerns continue to impact {company_name}'s operations and strategic plans.",
                 "Sentiment": "Negative",
                 "Topics": ["Regulations", "Compliance", "Legal Issues"],
-                "Source": "Financial Times",
-                "Published_Date": "2025-03-10",
-                "URL": f"https://example.com/{company_name.lower()}/2"
+                
             },
             {
                 "Title": f"{company_name} Announces Changes to Leadership Team",
                 "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
                 "Sentiment": "Neutral",
                 "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
-                "Source": "Market Watch",
-                "Published_Date": "2025-03-05",
-                "URL": f"https://example.com/{company_name.lower()}/3"
+
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+            
+               
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+               
+                
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+               
+               
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+                
+                
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+                
+               
+            }
+            {
+                "Title": f"{company_name} Announces Changes to Leadership Team",
+                "Summary": f"{company_name} has announced changes that could impact its operations in the coming months.",
+                "Sentiment": "Neutral",
+                "Topics": ["Leadership", "Corporate Governance", "Organization Structure"],
+               
+                
             }
         ],
         "Comparative_Sentiment_Score": {
