@@ -93,7 +93,7 @@ def extract_news_articles(company_name: str, num_articles: int = 10) -> List[Dic
     while len(articles) < num_articles:
         articles.append(simulate_article(company_name, len(articles) + 1))
     
-    return articles[:num_articles]
+    return articles[:10]
 
 def simulate_article_elements(company_name: str, count: int) -> List[Dict[str, Any]]:
     """Simulate article extraction for demonstration purposes"""
